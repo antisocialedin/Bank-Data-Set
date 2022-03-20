@@ -6,10 +6,11 @@ from sklearn.preprocessing import MinMaxScaler
 
 def main():
     # Faz a leitura do arquivo
-    input_file = '0-Datasets/MamoClear.data'
-    names = ['Age','Shape','Margin','Density','Severity']
-    features = ['Age','Shape','Margin','Density']
-    target = 'Severity'
+    input_file = '../0-Datasets/bankConvert.csv'
+    output_file = '../0-Datasets/bankNormal.csv'
+    names = ['age','job','marital','education','default','balance','housing','loan','contact','day','month','duration','campaign','pdays','previous','poutcome','y']
+    features = ['age','job','marital','education','default','housing','loan','contact','day','month','duration','campaign','pdays','previous','poutcome','y']
+    target = 'balance'
     df = pd.read_csv(input_file,    # Nome do arquivo com dados
                      names = names) # Nome das colunas                      
     ShowInformationDataFrame(df,"Dataframe original")
@@ -32,6 +33,8 @@ def main():
     normalized2Df = pd.concat([normalized2Df, df[[target]]], axis = 1)
     ShowInformationDataFrame(normalized2Df,"Dataframe Min-Max Normalized")
 
+    normalized2Df.to_csv(output_file, header=False, index=False) 
+
 
 def ShowInformationDataFrame(df, message=""):
     print(message+"\n")
@@ -39,7 +42,6 @@ def ShowInformationDataFrame(df, message=""):
     print(df.describe())
     print(df.head(10))
     print("\n") 
-
 
 if __name__ == "__main__":
     main()
