@@ -9,8 +9,8 @@ def main():
     input_file = '../0-Datasets/bankConvert.csv'
     output_file = '../0-Datasets/bankNormal.csv'
     names = ['age','job','marital','education','default','balance','housing','loan','contact','day','month','duration','campaign','pdays','previous','poutcome','y']
-    features = ['age','job','marital','education','default','housing','loan','contact','day','month','duration','campaign','pdays','previous','poutcome','y']
-    target = 'balance'
+    features = ['age','job','marital','education','default','balance','housing','loan','contact','day','month','duration','campaign','pdays','previous','poutcome']
+    target = 'y'
     df = pd.read_csv(input_file,    # Nome do arquivo com dados
                      names = names) # Nome das colunas                      
     ShowInformationDataFrame(df,"Dataframe original")
