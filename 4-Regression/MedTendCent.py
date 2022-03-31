@@ -4,7 +4,7 @@ import numpy as np
 
 def main():
     # Faz a leitura do arquivo
-    input_file = '../0-Datasets/bankNormal.csv'
+    input_file = '../0-Datasets/bankConvert.csv'
     names = ['age',
             'job',
             'marital',
@@ -41,8 +41,8 @@ def main():
     print('Quantil')
     print(df.quantile())
     print('\n')
-    print('Quantil 25%')
-    print(df.quantile(q=0.25))
+    print('Quantil 75%')
+    print(df.quantile(q=0.75))
     print('\n\n')
 
     #moda
@@ -81,5 +81,5 @@ def main():
     print(df.corr())
     print('\n')
 
-if __name__ == "_main_":
+if __name__ == "__main__":
     main()
