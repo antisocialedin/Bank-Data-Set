@@ -8,39 +8,8 @@ def main():
     # Faz a leitura do arquivo
     input_file = '../0-Datasets/bankConvert.csv'
     output_file = '../0-Datasets/bankNormal.csv'
-    names = ['age',
-            'job',
-            'marital',
-            'education',
-            'default',
-            'balance',
-            'housing',
-            'loan',
-            'contact',
-            'day',
-            'month',
-            'duration',
-            'campaign',
-            'pdays',
-            'previous',
-            'poutcome',
-            'y']
-    features = ['age',
-                'job',
-                'marital',
-                'education',
-                'default',
-                'balance',
-                'housing',
-                'loan',
-                'contact',
-                'day',
-                'month',
-                'duration',
-                'campaign',
-                'pdays',
-                'previous',
-                'poutcome']
+    names = ['age','job','marital','education','default','balance','housing','loan','duration','previous','poutcome','y']
+    features = ['age','job','marital','education','default','balance','housing','loan','duration','previous','poutcome','y']
     target = 'y'
     df = pd.read_csv(input_file,    # Nome do arquivo com dados
                      names = names) # Nome das colunas                      
