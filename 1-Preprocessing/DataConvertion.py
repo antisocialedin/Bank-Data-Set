@@ -4,7 +4,7 @@ import pandas as pd
 def main():
   input_file = '../0-Datasets/bankClean.csv'
   output_file = '../0-Datasets/bankConvert.csv'
-  names = ['age','job','marital','education','default','balance','housing','loan','duration','previous','poutcome','y']
+  names = ['age','job','marital','education','default','balance','housing','loan','contact','day','month','duration','campaign','pdays','previous','poutcome','y']
   features = ['age','job','marital','education','default','balance','housing','loan','duration','previous','poutcome','y']
   
   df = pd.read_csv(  input_file,          # Nome do arquivo com dados

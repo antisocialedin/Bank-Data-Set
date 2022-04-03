@@ -4,7 +4,7 @@ import numpy as np
 def main():
     # Faz a leitura do arquivo
     names = ['age','job','marital','education','default','balance','housing','loan','contact','day','month','duration','campaign','pdays','previous','poutcome','y'] 
-    features = ['age','job','marital','education','default','balance','housing','loan','duration','previous','poutcome','y']
+    features = ['age','job','marital','education','default','balance','housing','loan','contact','day','month','duration','campaign','pdays','previous','poutcome','y']
     output_file = '../0-Datasets/bankClean.csv'
     input_file = '../0-Datasets/bank-full.csv'
     df = pd.read_csv(input_file,          # Nome do arquivo com dados

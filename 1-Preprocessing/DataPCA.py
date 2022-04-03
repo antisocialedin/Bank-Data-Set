@@ -6,9 +6,9 @@ import matplotlib.pyplot as plt
 
 def main():
     # Faz a leitura do arquivo
-    input_file = '../0-Datasets/bankConvert.csv'
+    input_file = '../0-Datasets/bankNormal(z-score).csv'
     names = ['age','job','marital','education','default','balance','housing','loan','duration','previous','poutcome','y']
-    features = ['age','job','marital','education','default','balance','housing','loan','duration','previous','poutcome','y']
+    features = ['age','job','marital','education','default','balance','housing','loan','duration','previous','poutcome']
     target = 'y'
     df = pd.read_csv(input_file,    # Nome do arquivo com dados
                      names = names) # Nome das colunas                      
@@ -55,7 +55,7 @@ def VisualizePcaProjection(finalDf, targetColumn):
     ax = fig.add_subplot(1,1,1) 
     ax.set_xlabel('Principal Component 1', fontsize = 15)
     ax.set_ylabel('Principal Component 2', fontsize = 15)
-    ax.set_title('2 component PCA', fontsize = 20)
+    ax.set_title('2D PCA', fontsize = 20)
     targets = [0, 1, ]
     colors = ['r', 'g']
     for target, color in zip(targets,colors):
