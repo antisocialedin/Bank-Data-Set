@@ -1,48 +1,61 @@
+# import all libraries
 import pandas as pd
-from sklearn.decomposition import PCA
+import numpy as np
 import matplotlib.pyplot as plt
+#%matplotlib inline
+from sklearn.decomposition import PCA
+from sklearn.preprocessing import StandardScaler
 
-def main():
-  # Faz a leitura do arquivo
-  input_file = '../0-Datasets/bankConvert.csv'
-  names = ['age','job','marital','education','default','balance','housing','loan','duration','previous','poutcome','y']
-  features = ['age','job','marital','education','default','balance','housing','loan','duration','previous','poutcome']
-  target = 'y'
-  df = pd.read_csv(input_file,    # Nome do arquivo com dados
-                    names = names) # Nome das colunas
+#import the breast _cancer dataset
+from sklearn.datasets import load_breast_cancer
+data=load_breast_cancer()
+data.keys()
+ 
+# Check the output classes
+print(data['target_names'])
+ 
+# Check the input attributes
+print(data['feature_names'])
 
-  x = df.loc[:, features].values
-    
-  #PCA projection
-  pca = PCA()
-  principalComponents = pca.fit_transform(x)
+# construct a dataframe using pandas
+df1=pd.DataFrame(data['data'],columns=data['feature_names'])
+ 
+# Scale data before applying PCA
+scaling=StandardScaler()
+ 
+# Use fit and transform method
+scaling.fit(df1)
+Scaled_data=scaling.transform(df1)
+ 
+# Set the n_components=3
+principal=PCA(n_components=3)
+principal.fit(Scaled_data)
+x=principal.transform(Scaled_data)
+ 
+# Check the dimensions of data after PCA
+print(x.shape)
 
-  principalDf = pd.DataFrame(data=principalComponents[:,0:2], 
-                            columns=['principal component 1','principal component 2'])
-  finalDf = pd.concat([principalDf, df[target]], axis=1)
+# Check the values of eigen vectors
+# prodeced by principal components
+principal.components_
 
-  print(finalDf.info())
-  print(finalDf.describe())
-  print(finalDf.head(15))
+plt.figure(figsize=(10,10))
+plt.scatter(x[:,0],x[:,1],c=data['target'],cmap='plasma')
+plt.xlabel('pc1')
+plt.ylabel('pc2')
 
-  VisualizePcaProjection(finalDf, target)
+# import relevant libraries for 3d graph
+from mpl_toolkits.mplot3d import Axes3D
+fig = plt.figure(figsize=(10,10))
+ 
+# choose projection 3d for creating a 3d graph
+axis = fig.add_subplot(111, projection='3d')
+ 
+# x[:,0]is pc1,x[:,1] is pc2 while x[:,2] is pc3
+axis.scatter(x[:,0],x[:,1],x[:,2], c=data['target'],cmap='plasma')
+axis.set_xlabel("PC1", fontsize=10)
+axis.set_ylabel("PC2", fontsize=10)
+axis.set_zlabel("PC3", fontsize=10)
 
-def VisualizePcaProjection(finalDf, targetColumn):
-    fig = plt.figure(figsize = (8,8))
-    ax = plt.subplot(111)
-    ax.set_xlabel('Principal Component 1', fontsize = 15)
-    ax.set_ylabel('Principal Component 2', fontsize = 15)
-    ax.set_title('2 component PCA', fontsize = 20)
-    targets = [1, 2, ]
-    colors = ['r', 'g']
-    for target, color in zip(targets,colors):
-        indicesToKeep = finalDf[targetColumn] == target
-        ax.scatter(finalDf.loc[indicesToKeep, 'principal component 1'],
-                   finalDf.loc[indicesToKeep, 'principal component 2'],
-                   c = color, s = 50)
-    ax.legend(targets)
-    ax.grid()
-    plt.show()
-
-if __name__ == '__main__':
-  main()
+# check how much variance is explained by each principal component
+print(principal.explained_variance_ratio_)

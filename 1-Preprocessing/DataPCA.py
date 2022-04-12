@@ -20,11 +20,11 @@ def main():
     # Separating out the target
     y = df.loc[:,[target]].values
 
-    # Standardizing the features
+    """ # Standardizing the features
     x = StandardScaler().fit_transform(x)
     normalizedDf = pd.DataFrame(data = x, columns = features)
     normalizedDf = pd.concat([normalizedDf, df[[target]]], axis = 1)
-    ShowInformationDataFrame(normalizedDf,"Dataframe Normalized")
+    ShowInformationDataFrame(normalizedDf,"Dataframe Normalized") """
 
     # PCA projection
     pca = PCA()    
