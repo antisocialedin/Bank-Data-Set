@@ -75,7 +75,7 @@ def main():
     # Faz a leitura do arquivo
     input_file = '../0-Datasets/bankNormal(z-score).csv'
     names = ['age','job','marital','education','default','balance','housing','loan','duration','previous','poutcome','y']
-    features = ['age','job','marital','education','default','balance','housing','loan','duration','previous','poutcome']
+    labels = ['age','job','marital','education','default','balance','housing','loan','duration','previous','poutcome']
     target = 'y'
     df = pd.read_csv(input_file,    # Nome do arquivo com dados
                      names = names) # Nome das colunas                      
@@ -90,13 +90,13 @@ def main():
     plot_samples(projected, target, 'Original Labels')
  
     #Applying our kmeans function from scratch
-    labels = KMeans_scratch(projected,6,5)
+    labels = KMeans_scratch(projected,2,1)
     
     #Visualize the results 
     plot_samples(projected, labels, 'Clusters Labels KMeans from scratch')
 
     #Applying sklearn kemans function
-    kmeans = KMeans(n_clusters=6).fit(projected)
+    kmeans = KMeans(n_clusters=2).fit(projected)
     print(kmeans.inertia_)
     centers = kmeans.cluster_centers_
     score = silhouette_score(projected, kmeans.labels_)    

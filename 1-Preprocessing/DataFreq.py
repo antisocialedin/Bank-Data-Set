@@ -1,64 +1,76 @@
-import math
+from math import ceil
+from tracemalloc import stop
 import pandas as pd
-import matplotlib.pyplot as plt
 import numpy as np
+import matplotlib.pyplot as plt
+from names import names, features
+plt.style.use('ggplot')
 
 def main():
-        input_file = '../0-Datasets/bankNormal.csv'
-        names = ['age']
-        df = pd.read_csv(input_file, 
-                        names=names, 
-                        na_values='?')
+    input_file = '../0-Datasets/BankConvert.csv'
+    df = pd.read_csv(input_file, names = names)                    
 
-        #df = df.apply(lambda x: pd.factorize(x, sort=True)[0])
+    #Atributo idade 
+    df_age = (df['age'])
+    array_age = df_age.tolist()
+    #print(array_age)
+    print(df_age)
+    
+    #Idade Mínima e Máxima 
+    age_min = int(df.min()[['age']])
+    print(age_min)
+    age_max = int(df.max()[['age']])
+    print(age_max)
 
-        #df.sort_values(ascending=True)
-        df.sort_values(by=['age']) 
+    #Definir o número de classess
+    number_classes =  6
 
-        at = df.max() - df.min()
+    #Calcular a amplitude de classe
+    range = ceil((age_max - age_min)/number_classes)
+    print ("range de teste", range)
 
-        # Lembrando que k = raiz quadrada do total de registros/amostras
-        k = math.sqrt(len(df))
-        # O valor de amplitude de classe pode ser arredondado para um número inteiro, geralmente para facilitar a interpretação da tabela.
-        h = at/k 
-        h = math.ceil(h)
+    #Definir os limites inferiores e superiores das classes
+    frequencias = []
+    valor = age_min
+    while valor < age_max:
+        frequencias.append('{} - {}'.format(round(valor,1),round(valor+range,1)))
+        valor += range
 
-        frequencias = []
+    print('frequencias', frequencias)
 
-        # Menor valor da série
-        menor = round(df.min(),1)
+    #Rotular os valores dos atributos de acordo com sua classe
+    freq_abs = pd.cut(df_age, bins=[18,31,44,57,70,83]) # Discretização dos valores em k faixas, rotuladas pela lista criada anteriormente
+    print("teste frenquencia abs", freq_abs)
 
-        # Menor valor somado a amplitude
-       # menor_amp = round(menor+h,1)
+    #quantidade de atributos idade que tem em cada classe
+    qtd_atr = pd.value_counts(freq_abs) 
+    print('Quantidade de atributos em cada classe\n', qtd_atr)
 
-        valor = menor
-        while valor < df.max():
-                frequencias.append('{} - {}'.format(round(valor,1),round(valor+h,1)))
-                valor += h
+    #Histograma do atributo idade
+    bin = []
+    for number in frequencias:
+        bin.append(int(number[0:3]))
 
-        freq_abs = pd.qcut(df,len(frequencias),labels=frequencias) # Discretização dos valores em k faixas, rotuladas pela lista criada anteriormente
-        print(pd.value_counts(freq_abs))
+    last_range = frequencias.pop()
 
-        """ # Distribuição de frequência de cap-shape
-        cap_shape = df['age']
-        labels = ['bell','conical','flat','sunken','knobbed','convex']
-        sizes, x = np.histogram(cap_shape, bins=np.arange(7))
-        plt.pie(sizes, labels=labels)
-        plt.show() 
+    bin.append(int(last_range[5:7]))
+ 
+    plt.xlabel("Idade")
+    plt.ylabel("Distribuição da idade")
+    plt.title("Histograma de Distribuição de idade")
+    plt.xlim(35, 89)
+    plt.xticks(bin)
+    plt.hist(array_age, bins=bin, edgecolor='black')
+    plt.savefig('../0-Datasets/histogram.png', format='png')
+    plt.show()
+    
 
-        # Distribuição de frequência de odor
-        odor = df['odor']
-        labels =  ['almond','creosote','foul','anise','musty','none','pungent','spicy','fishy']
-        sizes, x = np.histogram(odor, bins=np.arange(10))
-        plt.bar(np.arange(9), height=sizes, tick_label=labels)
-        plt.show()  """
-
-        #Distribuição de frequência de y
-        y = df['age']
-        labels =  ['age']
-        sizes, x = np.histogram(y, bins=np.arange(11))
-        plt.bar(np.arange(10), height=sizes, tick_label=labels)
-        plt.show()
-
+def ShowInformationDataFrame(df, message=""):
+    print(message+"\n")
+    print(df.info())
+    print(df.describe())
+    print(df.head(10))
+    print("\n")
+    
 if __name__ == "__main__":
-        main()
+    main()

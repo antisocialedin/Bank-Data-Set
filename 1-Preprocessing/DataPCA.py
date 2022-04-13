@@ -2,16 +2,17 @@ import pandas as pd
 import numpy as np
 from sklearn.decomposition import PCA
 from sklearn.preprocessing import StandardScaler
+from sklearn.preprocessing import MinMaxScaler
 import matplotlib.pyplot as plt
 
-def main():
+def main(): 
     # Faz a leitura do arquivo
-    input_file = '../0-Datasets/bankNormal(z-score).csv'
+    input_file = '../0-Datasets/bankConvert.csv'
     names = ['age','job','marital','education','default','balance','housing','loan','duration','previous','poutcome','y']
     features = ['age','job','marital','education','default','balance','housing','loan','duration','previous','poutcome']
     target = 'y'
     df = pd.read_csv(input_file,    # Nome do arquivo com dados
-                     names = names) # Nome das colunas                      
+                     names = names) # Nome das colunas                                     
     ShowInformationDataFrame(df,"Dataframe original")
 
     # Separating out the features
@@ -20,13 +21,19 @@ def main():
     # Separating out the target
     y = df.loc[:,[target]].values
 
-    """ # Standardizing the features
+    """ # Standardizing the features (Z-Score normalization)
     x = StandardScaler().fit_transform(x)
     normalizedDf = pd.DataFrame(data = x, columns = features)
     normalizedDf = pd.concat([normalizedDf, df[[target]]], axis = 1)
-    ShowInformationDataFrame(normalizedDf,"Dataframe Normalized") """
+    ShowInformationDataFrame(normalizedDf,"Dataframe Z-Score Normalized") """
 
-    # PCA projection
+    # Standardizing the features (Min-Max)
+    x = MinMaxScaler().fit_transform(x)
+    normalizedDf = pd.DataFrame(data = x, columns = features)
+    normalizedDf = pd.concat([normalizedDf, df[[target]]], axis = 1)
+    ShowInformationDataFrame(normalizedDf,"Dataframe Min-Max Normalized")
+
+    # PCA projection - Set the n_components=2
     pca = PCA()    
     principalComponents = pca.fit_transform(x)
     print("Explained variance per component:")

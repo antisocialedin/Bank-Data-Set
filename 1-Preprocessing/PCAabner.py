@@ -7,18 +7,27 @@ from sklearn.decomposition import PCA
 from sklearn.preprocessing import StandardScaler
 
 #import the breast _cancer dataset
-from sklearn.datasets import load_breast_cancer
+""" from sklearn.datasets import load_breast_cancer
 data=load_breast_cancer()
-data.keys()
+data.keys() """
+
+#import the breast _cancer dataset
+input_file = '../0-Datasets/bankNormal(z-score).csv'
+names = ['age','job','marital','education','default','balance','housing','loan','duration','previous','poutcome','y']
+features = ['age','job','marital','education','default','balance','housing','loan','duration','previous','poutcome']
+target = 'y'
+data = pd.read_csv(input_file,    # Nome do arquivo com dados
+                    names = names) # Nome das colunas                      
+#ShowInformationDataFrame(df,"Dataframe original")
  
-# Check the output classes
-print(data['target_names'])
+""" # Check the output classes
+print(data['target'])
  
 # Check the input attributes
-print(data['feature_names'])
+print(data['features']) """
 
 # construct a dataframe using pandas
-df1=pd.DataFrame(data['data'],columns=data['feature_names'])
+df1=pd.DataFrame(data = data,columns=data['features'])
  
 # Scale data before applying PCA
 scaling=StandardScaler()
