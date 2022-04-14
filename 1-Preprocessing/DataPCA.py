@@ -21,17 +21,17 @@ def main():
     # Separating out the target
     y = df.loc[:,[target]].values
 
-    """ # Standardizing the features (Z-Score normalization)
+    # Standardizing the features (Z-Score normalization)
     x = StandardScaler().fit_transform(x)
     normalizedDf = pd.DataFrame(data = x, columns = features)
     normalizedDf = pd.concat([normalizedDf, df[[target]]], axis = 1)
-    ShowInformationDataFrame(normalizedDf,"Dataframe Z-Score Normalized") """
+    ShowInformationDataFrame(normalizedDf,"Dataframe Z-Score Normalized")
 
-    # Standardizing the features (Min-Max)
+    """ # Standardizing the features (Min-Max)
     x = MinMaxScaler().fit_transform(x)
     normalizedDf = pd.DataFrame(data = x, columns = features)
     normalizedDf = pd.concat([normalizedDf, df[[target]]], axis = 1)
-    ShowInformationDataFrame(normalizedDf,"Dataframe Min-Max Normalized")
+    ShowInformationDataFrame(normalizedDf,"Dataframe Min-Max Normalized") """
 
     # PCA projection - Set the n_components=2
     pca = PCA()    

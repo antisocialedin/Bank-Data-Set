@@ -8,38 +8,39 @@ plt.style.use('ggplot')
 
 def main():
     input_file = '../0-Datasets/BankConvert.csv'
-    df = pd.read_csv(input_file, names = names)                    
-
-    #Atributo idade 
-    df_age = (df['age'])
-    array_age = df_age.tolist()
-    #print(array_age)
-    print(df_age)
+    df = pd.read_csv(input_file, names = names) 
+    
+    ############################################################ Distribuição de Frequencia Saldo ##############################################################################
+    #Atributo saldo 
+    df_balance = (df['balance'])
+    array_balance = df_balance.tolist()
+    #print(array_balance)
+    print(df_balance)
     
     #Idade Mínima e Máxima 
-    age_min = int(df.min()[['age']])
-    print(age_min)
-    age_max = int(df.max()[['age']])
-    print(age_max)
+    balance_min = int(df.min()[['balance']])
+    print(balance_min)
+    balance_max = int(df.max()[['balance']])
+    print(balance_max)
 
     #Definir o número de classess
     number_classes =  6
 
     #Calcular a amplitude de classe
-    range = ceil((age_max - age_min)/number_classes)
+    range = ceil((balance_max - balance_min)/number_classes)
     print ("range de teste", range)
 
     #Definir os limites inferiores e superiores das classes
     frequencias = []
-    valor = age_min
-    while valor < age_max:
+    valor = balance_min
+    while valor < balance_max:
         frequencias.append('{} - {}'.format(round(valor,1),round(valor+range,1)))
         valor += range
 
     print('frequencias', frequencias)
 
     #Rotular os valores dos atributos de acordo com sua classe
-    freq_abs = pd.cut(df_age, bins=[18,31,44,57,70,83]) # Discretização dos valores em k faixas, rotuladas pela lista criada anteriormente
+    freq_abs = pd.cut(df_balance, bins=[-8019,10339,28697,47055,65413,83771]) # Discretização dos valores em k faixas, rotuladas pela lista criada anteriormente
     print("teste frenquencia abs", freq_abs)
 
     #quantidade de atributos idade que tem em cada classe
@@ -56,15 +57,14 @@ def main():
     bin.append(int(last_range[5:7]))
  
     plt.xlabel("Idade")
-    plt.ylabel("Distribuição da idade")
-    plt.title("Histograma de Distribuição de idade")
+    plt.ylabel("Distribuição da saldo")
+    plt.title("Histograma de Distribuição de saldo")
     plt.xlim(35, 89)
     plt.xticks(bin)
-    plt.hist(array_age, bins=bin, edgecolor='black')
-    plt.savefig('../0-Datasets/histogram.png', format='png')
+    plt.hist(array_balance, bins=bin, edgecolor='black')
+    #plt.savefig('../0-Datasets/histogram.png', format='png')
     plt.show()
     
-
 def ShowInformationDataFrame(df, message=""):
     print(message+"\n")
     print(df.info())

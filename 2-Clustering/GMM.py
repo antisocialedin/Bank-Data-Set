@@ -1,8 +1,8 @@
 #Implementation of Kmeans from scratch and using sklearn
 #Loading the required modules 
 import numpy as np
+import pandas as pd 
 from scipy.spatial.distance import cdist 
-from sklearn.datasets import load_digits
 from sklearn.decomposition import PCA
 from sklearn.mixture import GaussianMixture
 from sklearn.metrics import silhouette_score
@@ -32,21 +32,33 @@ def plot_samples(projected, labels, title):
     plt.legend()
     plt.title(title)
 
-def main():
-    #Load dataset Digits
-    digits = load_digits()
-    show_digitsdataset(digits)
+def ShowInformationDataFrame(df, message=""):
+    print(message+"\n")
+    print(df.info())
+    print(df.describe())
+    print(df.head(10))
+    print("\n")
     
+def main():
+    # Faz a leitura do arquivo
+    input_file = '../0-Datasets/bankNormal(z-score).csv'
+    names = ['age','job','marital','education','default','balance','housing','loan','duration','previous','poutcome','y']
+    labels = ['age','job','marital','education','default','balance','housing','loan','duration','previous','poutcome']
+    target = 'y'
+    df = pd.read_csv(input_file,    # Nome do arquivo com dados
+                     names = names) # Nome das colunas                      
+    ShowInformationDataFrame(df,"Dataframe original")
+
     #Transform the data using PCA
     pca = PCA(2)
-    projected = pca.fit_transform(digits.data)
+    projected = pca.fit_transform(df)
     print(pca.explained_variance_ratio_)
-    print(digits.data.shape)
+    print(df.shape)
     print(projected.shape)    
-    plot_samples(projected, digits.target, 'Original Labels') 
+    plot_samples(projected, target, 'Original Labels') 
     
     #Applying sklearn GMM function
-    gm  = GaussianMixture(n_components=10).fit(projected)
+    gm  = GaussianMixture(n_components=3).fit(projected)
     print(gm.weights_)
     print(gm.means_)
     x = gm.predict(projected)
