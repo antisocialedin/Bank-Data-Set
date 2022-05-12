@@ -8,7 +8,6 @@ from sklearn.preprocessing import StandardScaler
 from sklearn.metrics import accuracy_score
 from sklearn.metrics import f1_score
 from sklearn.metrics import confusion_matrix
-from sklearn import datasets
 from sklearn.neighbors import KNeighborsClassifier
 from collections import Counter
 
@@ -40,6 +39,7 @@ def knn_predict(X_train, X_test, y_train, y_test, k, p):
             distances.append(distance)
         
         # Store distances in a dataframe
+        #y_train = pd.DataFrame(y_train, columns = ['target'])
         df_dists = pd.DataFrame(data=distances, columns=['dist'], 
                                 index=y_train.index)
         
@@ -94,30 +94,49 @@ def plot_confusion_matrix(cm, classes,
 
 
 def main():
-    # Load iris data and store in dataframe
+    """ # Load iris data and store in dataframe
     iris = datasets.load_iris()
     df = pd.DataFrame(data=iris.data, columns=iris.feature_names)
     df['target'] = iris.target
-    df.head()
+    df.head() """
 
+    # Faz a leitura do arquivo
+    input_file = '0-Datasets/bankConvert.csv'
+    names = ['age','job','marital','education','default','balance','housing','loan','duration','previous','poutcome','y']
+    features = ['age','job','marital','education','default','balance','housing','loan','duration','previous','poutcome']
+    target = 'y'
+    df = pd.read_csv(input_file,    # Nome do arquivo com dados
+                     names = names) # Nome das colunas                      
+    #ShowInformationDataFrame(df,"Dataframe original")   
+    
     # Separate X and y data
-    X = df.drop('target', axis=1)
-    y = df.target   
-    print("Total samples: {}".format(X.shape[0]))
+    X = df.loc[:, features]    
+    y = df.loc[:,target]
+    print(X.head())
+    # Separating out the features
+    #X = df.loc[:, features].values
 
-    # Split the data - 75% train, 25% test
-    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.25, random_state=1)
+    # Separating out the target
+    #y = df.loc[:,[target]].values 
+    
+    print("Total samples: {}".format(X.shape[0]))
+    
+    # Split the data - 70% train, 30% test
+    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.3, random_state=1)
     print("Total train samples: {}".format(X_train.shape[0]))
     print("Total test  samples: {}".format(X_test.shape[0]))
 
+    
     # Scale the X data using Z-score
     scaler = StandardScaler()
     X_train = scaler.fit_transform(X_train)
     X_test = scaler.transform(X_test)
         
+    
+        
     # STEP 1 - TESTS USING knn classifier write from scratch    
     # Make predictions on test dataset using knn classifier
-    y_hat_test = knn_predict(X_train, X_test, y_train, y_test, k=5, p=2)
+    y_hat_test = knn_predict(X_train, X_test, y_train, y_test, k=10, p=2)
 
     # Get test accuracy score
     accuracy = accuracy_score(y_test, y_hat_test)*100
@@ -127,8 +146,8 @@ def main():
 
     # Get test confusion matrix
     cm = confusion_matrix(y_test, y_hat_test)        
-    plot_confusion_matrix(cm, iris.target_names, False, "Confusion Matrix - K-NN")      
-    plot_confusion_matrix(cm, iris.target_names, True, "Confusion Matrix - K-NN normalized")  
+    plot_confusion_matrix(cm, df.features, False, "Confusion Matrix - K-NN")      
+    plot_confusion_matrix(cm, df.features, True, "Confusion Matrix - K-NN normalized")  
 
     # STEP 2 - TESTS USING knn classifier from sk-learn
     knn = KNeighborsClassifier(n_neighbors=5)
@@ -143,8 +162,8 @@ def main():
 
     # Get test confusion matrix    
     cm = confusion_matrix(y_test, y_hat_test)        
-    plot_confusion_matrix(cm, iris.target_names, False, "Confusion Matrix - K-NN sklearn")      
-    plot_confusion_matrix(cm, iris.target_names, True, "Confusion Matrix - K-NN sklearn normalized" )  
+    plot_confusion_matrix(cm, df.features, False, "Confusion Matrix - K-NN sklearn")      
+    plot_confusion_matrix(cm, df.features, True, "Confusion Matrix - K-NN sklearn normalized" )  
     plt.show()
 
 
