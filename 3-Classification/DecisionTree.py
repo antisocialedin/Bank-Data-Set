@@ -8,9 +8,9 @@ from sklearn.preprocessing import StandardScaler
 def main():
     
     # Faz a leitura do arquivo
-    input_file = '../0-Datasets/bankConvert.csv'
-    names = ['age','job','marital','education','default','balance','housing','loan','duration','previous','poutcome','y']
-    features = ['age','job','marital','education','default','balance','housing','loan','duration','previous','poutcome']
+    input_file = '0-Datasets/bankConvert.csv'
+    names = ['age','job','marital','education','default','balance','housing','loan','y']
+    features = ['age','job','marital','education','default','balance','housing','loan']
     target = 'y'
     df = pd.read_csv(input_file,    # Nome do arquivo com dados
                      names = names) # Nome das colunas                      
@@ -28,7 +28,7 @@ def main():
     normalizedDf = pd.DataFrame(data = X, columns = features)
     normalizedDf = pd.concat([normalizedDf, df[[target]]], axis = 1)
     
-    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.3, random_state=0)
+    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.25, random_state=0)
     print(X_train.shape)
     print(X_test.shape)
 

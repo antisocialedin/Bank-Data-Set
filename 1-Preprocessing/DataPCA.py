@@ -7,9 +7,9 @@ import matplotlib.pyplot as plt
 
 def main(): 
     # Faz a leitura do arquivo
-    input_file = '../0-Datasets/bankConvert.csv'
-    names = ['age','job','marital','education','default','balance','housing','loan','duration','previous','poutcome','y']
-    features = ['age','job','marital','education','default','balance','housing','loan','duration','previous','poutcome']
+    input_file = '0-Datasets/bankConvert.csv'
+    names = ['age','job','marital','education','default','balance','housing','loan','y']
+    features = ['age','job','marital','education','default','balance','housing','loan']
     target = 'y'
     df = pd.read_csv(input_file,    # Nome do arquivo com dados
                      names = names) # Nome das colunas                                     
