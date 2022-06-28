@@ -7,7 +7,7 @@ from names import names, features
 plt.style.use('ggplot')
 
 def main():
-    input_file = '../0-Datasets/BankConvert.csv'
+    input_file = '0-Datasets/BankConvert.csv'
     df = pd.read_csv(input_file, names = names) 
     
     ############################################################ Distribuição de Frequencia Saldo ##############################################################################
@@ -18,9 +18,9 @@ def main():
     print(df_balance)
     
     #Idade Mínima e Máxima 
-    balance_min = int(df.min()[['balance']])
+    balance_min = float(df.min()[['balance']])
     print(balance_min)
-    balance_max = int(df.max()[['balance']])
+    balance_max = float(df.max()[['balance']])
     print(balance_max)
 
     #Definir o número de classess

@@ -7,7 +7,7 @@ from names import names, features
 plt.style.use('ggplot')
 
 def main():
-    input_file = '../0-Datasets/BankConvert.csv'
+    input_file = '0-Datasets/BankConvert.csv'
     df = pd.read_csv(input_file, names = names)                    
 
     ############################################################ Distribuição de Frequencia Idade ##############################################################################
@@ -62,7 +62,7 @@ def main():
     plt.xlim(35, 89)
     plt.xticks(bin)
     plt.hist(array_age, bins=bin, edgecolor='black')
-    #plt.savefig('../0-Datasets/histogram.png', format='png')
+    plt.savefig('0-Datasets/DataFreqAge.png', format='png')
     plt.show()
 
 def ShowInformationDataFrame(df, message=""):
