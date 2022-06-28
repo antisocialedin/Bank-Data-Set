@@ -71,7 +71,7 @@ def main():
     emp10 = df['job'].value_counts()[10]
     total = emp0 + emp1 + emp2 + emp3 + emp4 + emp5 + emp6 + emp7 + emp8 + emp9 + emp10
     y = np.array([emp0,emp1,emp2,emp3,emp4,emp5,emp6,emp7,emp8,emp9,emp10])
-    plt.pie(y , labels=label, autopct= lambda x: '{:.0f}'.format(x*y.sum()/100, startangle=90))
+    plt.pie(y, labels=label, autopct= lambda x: '{:.0f}'.format(x*y.sum()/100, startangle=90))
     plt.title("Gráfico de Distribuição de Empregos")
     plt.savefig('0-Datasets/DataFreqJob.png', format='png')
     plt.show() 

@@ -57,9 +57,9 @@ def main():
     bin.append(int(last_range[5:7]))
  
     plt.xlabel("Idade")
-    plt.ylabel("Distribuição da idade")
-    plt.title("Histograma de Distribuição de idade")
-    plt.xlim(35, 89)
+    plt.ylabel("Quantidade de Amostras")
+    plt.title("Distribuição de idade")
+    #plt.xlim(35, 89)
     plt.xticks(bin)
     plt.hist(array_age, bins=bin, edgecolor='black')
     plt.savefig('0-Datasets/DataFreqAge.png', format='png')

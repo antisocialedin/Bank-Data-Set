@@ -18,9 +18,9 @@ def main():
     print(df_balance)
     
     #Idade Mínima e Máxima 
-    balance_min = float(df.min()[['balance']])
+    balance_min = int(df.min()[['balance']])
     print(balance_min)
-    balance_max = float(df.max()[['balance']])
+    balance_max = int(df.max()[['balance']])
     print(balance_max)
 
     #Definir o número de classess
@@ -40,7 +40,7 @@ def main():
     print('frequencias', frequencias)
 
     #Rotular os valores dos atributos de acordo com sua classe
-    freq_abs = pd.cut(df_balance, bins=[-8019,10339,28697,47055,65413,83771]) # Discretização dos valores em k faixas, rotuladas pela lista criada anteriormente
+    freq_abs = pd.cut(df_balance, bins=[-8019, 10339, 28697, 47055, 65413, 83771]) # Discretização dos valores em k faixas, rotuladas pela lista criada anteriormente
     print("teste frenquencia abs", freq_abs)
 
     #quantidade de atributos idade que tem em cada classe
@@ -54,15 +54,15 @@ def main():
 
     last_range = frequencias.pop()
 
-    bin.append(int(last_range[5:7]))
+    #bin.append(int(last_range[5:7]))
  
-    plt.xlabel("Idade")
-    plt.ylabel("Distribuição da saldo")
-    plt.title("Histograma de Distribuição de saldo")
+    plt.xlabel("Quantidade de Amostras")
+    plt.ylabel("Distribuição de Saldo")
+    plt.title("Saldo")
     plt.xlim(35, 89)
     plt.xticks(bin)
     plt.hist(array_balance, bins=bin, edgecolor='black')
-    #plt.savefig('../0-Datasets/histogram.png', format='png')
+    #plt.savefig('0-Datasets/DataFreqBalance.png', format='png')
     plt.show()
     
 def ShowInformationDataFrame(df, message=""):
