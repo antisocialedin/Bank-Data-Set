@@ -3,12 +3,18 @@ from tracemalloc import stop
 import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
-from names import names, features
 plt.style.use('ggplot')
 
 def main():
-    input_file = '0-Datasets/BankConvert.csv'
-    df = pd.read_csv(input_file, names = names)                    
+        # Faz a leitura do arquivo
+    input_file = '0-Datasets/bankConvert.csv'
+    names = ['age','job','marital','education','default','balance','housing','loan','y']
+    features = ['age','job','marital','education','default','balance','housing','loan']
+    target = 'y'
+    df = pd.read_csv(input_file,    # Nome do arquivo com dados
+                    usecols = features,
+                     names = names) # Nome das colunas
+                    
 
     ############################################################ Distribuição de Frequencia Job ##############################################################################
     #Atributo job 

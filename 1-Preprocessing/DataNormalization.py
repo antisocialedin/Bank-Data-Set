@@ -6,10 +6,10 @@ from sklearn.preprocessing import MinMaxScaler
 
 def main():
     # Faz a leitura do arquivo
-    input_file = '../0-Datasets/bankConvert.csv'
-    output_file = '../0-Datasets/bankNormal(z-score).csv'
-    names = ['age','job','marital','education','default','balance','housing','loan','duration','previous','poutcome','y']
-    features = ['age','job','marital','education','default','balance','housing','loan','duration','previous','poutcome','y']
+    input_file = '0-Datasets/bankConvert.csv'
+    output_file = '0-Datasets/bankNormal(z-score).csv'
+    names = ['age','job','marital','education','default','balance','housing','loan','y']
+    features = ['age','job','marital','education','default','balance','housing','loan']
     target = 'y'
     df = pd.read_csv(input_file,    # Nome do arquivo com dados
                      names = names) # Nome das colunas                      
@@ -29,13 +29,13 @@ def main():
 
     normalized1Df.to_csv(output_file, header=False, index=False)
 
-    # Mix-Max normalization
+    """ # Mix-Max normalization
     x_minmax = MinMaxScaler().fit_transform(x)
     normalized2Df = pd.DataFrame(data = x_minmax, columns = features)
     normalized2Df = pd.concat([normalized2Df, df[[target]]], axis = 1)
     ShowInformationDataFrame(normalized2Df,"Dataframe Min-Max Normalized")
 
-    normalized2Df.to_csv(output_file, header=False, index=False)
+    normalized2Df.to_csv(output_file, header=False, index=False) """
 
 
 def ShowInformationDataFrame(df, message=""):

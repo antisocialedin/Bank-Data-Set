@@ -12,7 +12,6 @@ def main():
     features = ['age','job','marital','education','default','balance','housing','loan']
     target = 'y'
     df = pd.read_csv(input_file,    # Nome do arquivo com dados
-                    usecols = features,
                      names = names) # Nome das colunas
 
     """ ################### IDADE X SALDO #####################
@@ -26,8 +25,8 @@ def main():
     ################### EMPREGO X SALDO #####################
     plt.subplots(figsize=(10, 5))
     plt.scatter(df['job'],df['balance'])
-    plt.xlabel('job')
-    plt.ylabel('saldo')
+    plt.xlabel('Emprego')
+    plt.ylabel('Saldo')
     plt.title("Emprego X Saldo")
     plt.show()
 
@@ -47,5 +46,13 @@ def main():
     plt.title("Empréstimo X Idade")
     plt.show()
     
+"""     ################### job X y #####################
+    plt.subplots(figsize=(10, 5))
+    plt.scatter(df['y'],df['job'])
+    plt.xlabel('y')
+    plt.ylabel('Emprego')
+    plt.title("y X Emprego")
+    plt.show() """
+
 if __name__ == "__main__":
     main()

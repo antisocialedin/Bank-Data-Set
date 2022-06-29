@@ -41,9 +41,9 @@ def ShowInformationDataFrame(df, message=""):
     
 def main():
     # Faz a leitura do arquivo
-    input_file = '../0-Datasets/bankNormal(z-score).csv'
-    names = ['age','job','marital','education','default','balance','housing','loan','duration','previous','poutcome','y']
-    labels = ['age','job','marital','education','default','balance','housing','loan','duration','previous','poutcome']
+    input_file = '0-Datasets/bankNormal(z-score).csv'
+    names = ['age','job','marital','education','default','balance','housing','loan','y']
+    labels = ['age','job','marital','education','default','balance','housing','loan']
     target = 'y'
     df = pd.read_csv(input_file,    # Nome do arquivo com dados
                      names = names) # Nome das colunas                      
@@ -58,7 +58,7 @@ def main():
     plot_samples(projected, target, 'Original Labels') 
     
     #Applying sklearn GMM function
-    gm  = GaussianMixture(n_components=3).fit(projected)
+    gm  = GaussianMixture(n_components=2).fit(projected)
     print(gm.weights_)
     print(gm.means_)
     x = gm.predict(projected)

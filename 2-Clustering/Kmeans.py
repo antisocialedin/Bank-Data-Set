@@ -73,9 +73,9 @@ def ShowInformationDataFrame(df, message=""):
 def main():
     
     # Faz a leitura do arquivo
-    input_file = '../0-Datasets/bankNormal(z-score).csv'
-    names = ['age','job','marital','education','default','balance','housing','loan','duration','previous','poutcome','y']
-    labels = ['age','job','marital','education','default','balance','housing','loan','duration','previous','poutcome']
+    input_file = '0-Datasets/bankNormal(z-score).csv'
+    names = ['age','job','marital','education','default','balance','housing','loan','y']
+    labels = ['age','job','marital','education','default','balance','housing','loan']
     target = 'y'
     df = pd.read_csv(input_file,    # Nome do arquivo com dados
                      names = names) # Nome das colunas                      

@@ -3,12 +3,17 @@ from tracemalloc import stop
 import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
-from names import names, features
 plt.style.use('ggplot')
 
 def main():
-    input_file = '0-Datasets/BankConvert.csv'
-    df = pd.read_csv(input_file, names = names) 
+    # Faz a leitura do arquivo
+    input_file = '0-Datasets/bankConvert.csv'
+    names = ['age','job','marital','education','default','balance','housing','loan','y']
+    features = ['age','job','marital','education','default','balance','housing','loan']
+    target = 'y'
+    df = pd.read_csv(input_file,    # Nome do arquivo com dados
+                    usecols = features,
+                     names = names) # Nome das colunas
     
     ############################################################ Distribuição de Frequencia Saldo ##############################################################################
     #Atributo saldo 
@@ -56,13 +61,13 @@ def main():
 
     #bin.append(int(last_range[5:7]))
  
-    plt.xlabel("Quantidade de Amostras")
-    plt.ylabel("Distribuição de Saldo")
-    plt.title("Saldo")
-    plt.xlim(35, 89)
+    plt.xlabel("Saldo")
+    plt.ylabel("Quantidade de Amostras")
+    plt.title("Distribuição de Saldo")
+    #plt.xlim(35, 89)
     plt.xticks(bin)
     plt.hist(array_balance, bins=bin, edgecolor='black')
-    #plt.savefig('0-Datasets/DataFreqBalance.png', format='png')
+    plt.savefig('0-Datasets/DataFreqBalance.png', format='png')
     plt.show()
     
 def ShowInformationDataFrame(df, message=""):

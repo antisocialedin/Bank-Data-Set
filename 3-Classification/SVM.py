@@ -3,7 +3,7 @@ import itertools
 import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
-from sklearn.model_selection import train_test_split
+from sklearn.model_selection import cross_validate, train_test_split
 from sklearn.preprocessing import StandardScaler
 from sklearn.metrics import accuracy_score
 from sklearn.metrics import f1_score
@@ -109,7 +109,12 @@ def main():
     # predict using test dataset
     y_hat_test = svm.predict(X_test)
 
-     # Get test accuracy score
+    cv_results = cross_validate(svm, X, y, cv=10)
+    sorted(cv_results.keys())
+    sorted(cv_results['test_score'])
+    print("Cross Validation Decision Tree: {:.2f}%".format(np.mean(cv_results['test_score'])*100))
+
+    # Get test accuracy score
     accuracy = accuracy_score(y_test, y_hat_test)*100
     f1 = f1_score(y_test, y_hat_test,average='macro')
     print("Acurracy SVM from sk-learn: {:.2f}%".format(accuracy))

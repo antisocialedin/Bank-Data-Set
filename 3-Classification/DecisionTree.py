@@ -32,7 +32,7 @@ def main():
     print(X_train.shape)
     print(X_test.shape)
 
-    clf = DecisionTreeClassifier(max_leaf_nodes=10)
+    clf = DecisionTreeClassifier(max_leaf_nodes=2)
     clf.fit(X_train, y_train)
     tree.plot_tree(clf)
     plt.show()
