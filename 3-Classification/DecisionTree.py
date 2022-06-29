@@ -1,12 +1,13 @@
 from matplotlib import pyplot as plt
-from sklearn.model_selection import train_test_split
+import numpy as np
+from sklearn.model_selection import cross_validate, train_test_split
 from sklearn.tree import DecisionTreeClassifier
 from sklearn import tree
+from sklearn.metrics import recall_score
 import pandas as pd
 from sklearn.preprocessing import StandardScaler
 
 def main():
-    
     # Faz a leitura do arquivo
     input_file = '0-Datasets/bankConvert.csv'
     names = ['age','job','marital','education','default','balance','housing','loan','y']
@@ -14,8 +15,8 @@ def main():
     target = 'y'
     df = pd.read_csv(input_file,    # Nome do arquivo com dados
                      names = names) # Nome das colunas                      
-    #ShowInformationDataFrame(df,"Dataframe original")            
-   
+    #ShowInformationDataFrame(df,"Dataframe original")  
+    
     """ # Separating out the features
     X = df.loc[:, features].values
     print(X.shape)
@@ -27,7 +28,6 @@ def main():
     X = df.drop('y', axis=1)
     y = df['y'] 
 
-    print(X.shape)
 
     # Standardizing the features
     X = StandardScaler().fit_transform(X)
@@ -45,6 +45,11 @@ def main():
     
     predictions = clf.predict(X_test)
     print(predictions)
+    
+    cv_results = cross_validate(clf, X, y, cv=10)
+    sorted(cv_results.keys())
+    sorted(cv_results['test_score'])
+    print("Cross Validation Decision Tree: {:.2f}%".format(np.mean(cv_results['test_score'])*100))
     
     result = clf.score(X_test, y_test)
     print('Acuraccy:')
