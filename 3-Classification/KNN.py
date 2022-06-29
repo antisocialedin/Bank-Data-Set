@@ -3,11 +3,12 @@ import itertools
 import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
-from sklearn.model_selection import train_test_split
+from sklearn.model_selection import cross_validate, train_test_split
 from sklearn.preprocessing import StandardScaler
 from sklearn.metrics import accuracy_score
 from sklearn.metrics import f1_score
 from sklearn.metrics import confusion_matrix
+from sklearn import datasets
 from sklearn.neighbors import KNeighborsClassifier
 from collections import Counter
 
@@ -98,20 +99,28 @@ def main():
     iris = datasets.load_iris()
     df = pd.DataFrame(data=iris.data, columns=iris.feature_names)
     df['target'] = iris.target
-    df.head() """
+    df.head()
+    labels = ['True label', 'Predective label'] """
 
     # Faz a leitura do arquivo
     input_file = '0-Datasets/bankConvert.csv'
     names = ['age','job','marital','education','default','balance','housing','loan','y']
     features = ['age','job','marital','education','default','balance','housing','loan']
     target = 'y'
+    features_names = ['Y = 1', 'Y = 0']
     df = pd.read_csv(input_file,    # Nome do arquivo com dados
                      names = names) # Nome das colunas                      
     #ShowInformationDataFrame(df,"Dataframe original")   
     
+    df = df.loc[0:500]
+
     # Separate X and y data
-    X = df.loc[:, features]    
-    y = df.loc[:,target]
+    X = df.drop('y', axis=1)
+    y = df['y']
+
+    #X = df.loc[:, features]    
+    #y = df.loc[:, target]
+
     print(X.head())
     # Separating out the features
     #X = df.loc[:, features].values
@@ -122,7 +131,7 @@ def main():
     print("Total samples: {}".format(X.shape[0]))
     
     # Split the data - 70% train, 30% test
-    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.3, random_state=1)
+    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.25, random_state=1)
     print("Total train samples: {}".format(X_train.shape[0]))
     print("Total test  samples: {}".format(X_test.shape[0]))
 
@@ -134,9 +143,9 @@ def main():
         
     
         
-    # STEP 1 - TESTS USING knn classifier write from scratch    
+    """ # STEP 1 - TESTS USING knn classifier write from scratch    
     # Make predictions on test dataset using knn classifier
-    y_hat_test = knn_predict(X_train, X_test, y_train, y_test, k=10, p=2)
+    y_hat_test = knn_predict(X_train, X_test, y_train, y_test, k=5, p=2)
 
     # Get test accuracy score
     accuracy = accuracy_score(y_test, y_hat_test)*100
@@ -146,13 +155,18 @@ def main():
 
     # Get test confusion matrix
     cm = confusion_matrix(y_test, y_hat_test)        
-    plot_confusion_matrix(cm, df.features, False, "Confusion Matrix - K-NN")      
-    plot_confusion_matrix(cm, df.features, True, "Confusion Matrix - K-NN normalized")  
+    plot_confusion_matrix(cm, features_names, False, "Confusion Matrix - K-NN")      
+    plot_confusion_matrix(cm, features_names, True, "Confusion Matrix - K-NN normalized")  """ 
 
     # STEP 2 - TESTS USING knn classifier from sk-learn
     knn = KNeighborsClassifier(n_neighbors=5)
     knn.fit(X_train, y_train)
     y_hat_test = knn.predict(X_test)
+
+    cv_results = cross_validate(knn, X, y, cv=10)
+    sorted(cv_results.keys())
+    sorted(cv_results['test_score'])
+    print("Cross Validation SVM: {:.2f}%".format(np.mean(cv_results['test_score'])*100))
 
      # Get test accuracy score
     accuracy = accuracy_score(y_test, y_hat_test)*100
@@ -162,8 +176,8 @@ def main():
 
     # Get test confusion matrix    
     cm = confusion_matrix(y_test, y_hat_test)        
-    plot_confusion_matrix(cm, df.features, False, "Confusion Matrix - K-NN sklearn")      
-    plot_confusion_matrix(cm, df.features, True, "Confusion Matrix - K-NN sklearn normalized" )  
+    plot_confusion_matrix(cm, features_names, False, "Confusion Matrix - K-NN sklearn")      
+    plot_confusion_matrix(cm, features_names, True, "Confusion Matrix - K-NN sklearn normalized" )  
     plt.show()
 
 

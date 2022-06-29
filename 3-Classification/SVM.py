@@ -8,7 +8,7 @@ from sklearn.preprocessing import StandardScaler
 from sklearn.metrics import accuracy_score
 from sklearn.metrics import f1_score
 from sklearn.metrics import confusion_matrix
-from sklearn import datasets
+#from sklearn import datasets
 from sklearn.svm import SVC
 
 def plot_confusion_matrix(cm, classes,
@@ -46,23 +46,6 @@ def plot_confusion_matrix(cm, classes,
     plt.ylabel('True label')
     plt.xlabel('Predicted label')    
 
-""" def load_dataset(dataset='cancer'):        
-    if dataset == 'iris':
-        # Load iris data and store in dataframe
-        iris = datasets.load_iris()
-        names = iris.target_names
-        df = pd.DataFrame(data=iris.data, columns=iris.feature_names)
-        df['target'] = iris.target
-    elif dataset == 'cancer':
-        # Load cancer data and store in dataframe
-        cancer = datasets.load_breast_cancer()
-        names = cancer.target_names
-        df = pd.DataFrame(data=cancer.data, columns=cancer.feature_names)
-        df['target'] = cancer.target
-    
-    print(df.head())
-    return names, df """
-
 
 def main():
     
@@ -71,17 +54,22 @@ def main():
     names = ['age','job','marital','education','default','balance','housing','loan','y']
     features = ['age','job','marital','education','default','balance','housing','loan']
     target = 'y'
+    features_names = ['Y = 1', 'Y = 0']
     df = pd.read_csv(input_file,    # Nome do arquivo com dados
                      names = names) # Nome das colunas                      
-    #ShowInformationDataFrame(df,"Dataframe original")  
-    
-    """ #load dataset
-    target_names, df = load_dataset('iris') """
+    #ShowInformationDataFrame(df,"Dataframe original")
+
+    df = df.loc[0:5000]
 
     # Separate X and y data
-    X = df.loc[:, features]    
-    y = df.loc[:,target]
-    print(X.head())
+    #X = df.loc[:, features]    
+    #y = df.loc[:,target]
+
+    # Separate X and y data
+    X = df.drop('y', axis=1)
+    y = df['y'] 
+
+    print(X.head())  
     
     print("Total samples: {}".format(X.shape[0]))
 
@@ -112,7 +100,7 @@ def main():
     cv_results = cross_validate(svm, X, y, cv=10)
     sorted(cv_results.keys())
     sorted(cv_results['test_score'])
-    print("Cross Validation Decision Tree: {:.2f}%".format(np.mean(cv_results['test_score'])*100))
+    print("Cross Validation SVM: {:.2f}%".format(np.mean(cv_results['test_score'])*100))
 
     # Get test accuracy score
     accuracy = accuracy_score(y_test, y_hat_test)*100
@@ -122,8 +110,8 @@ def main():
 
     # Get test confusion matrix    
     cm = confusion_matrix(y_test, y_hat_test)        
-    plot_confusion_matrix(cm, target, False, "Confusion Matrix - SVM sklearn")      
-    plot_confusion_matrix(cm, target, True, "Confusion Matrix - SVM sklearn normalized" )  
+    plot_confusion_matrix(cm, features_names, False, "Confusion Matrix - SVM sklearn")      
+    plot_confusion_matrix(cm, features_names, True, "Confusion Matrix - SVM sklearn normalized" )  
     plt.show()
 
 

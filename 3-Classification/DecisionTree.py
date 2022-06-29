@@ -16,12 +16,18 @@ def main():
                      names = names) # Nome das colunas                      
     #ShowInformationDataFrame(df,"Dataframe original")            
    
-    # Separating out the features
+    """ # Separating out the features
     X = df.loc[:, features].values
     print(X.shape)
 
     # Separating out the target
-    y = df.loc[:,[target]].values
+    y = df.loc[:,[target]].values """
+
+    # Separate X and y data
+    X = df.drop('y', axis=1)
+    y = df['y'] 
+
+    print(X.shape)
 
     # Standardizing the features
     X = StandardScaler().fit_transform(X)
@@ -32,7 +38,7 @@ def main():
     print(X_train.shape)
     print(X_test.shape)
 
-    clf = DecisionTreeClassifier(max_leaf_nodes=2)
+    clf = DecisionTreeClassifier(max_leaf_nodes=3)
     clf.fit(X_train, y_train)
     tree.plot_tree(clf)
     plt.show()

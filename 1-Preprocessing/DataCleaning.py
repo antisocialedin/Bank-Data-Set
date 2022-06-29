@@ -5,8 +5,8 @@ def main():
     # Faz a leitura do arquivo
     names = ['age','job','marital','education','default','balance','housing','loan','contact','day','month','duration','campaign','pdays','previous','poutcome','y'] 
     features = ['age','job','marital','education','default','balance','housing','loan','contact','day','month','duration','campaign','pdays','previous','poutcome','y']
-    output_file = '../0-Datasets/bankClean.csv'
-    input_file = '../0-Datasets/bank-full.csv'
+    output_file = '0-Datasets/bankClean.csv'
+    input_file = '0-Datasets/bank-full.csv'
     df = pd.read_csv(input_file,          # Nome do arquivo com dados
                      names = names,       # Nome das colunas 
                      usecols = features,  # Define as colunas que serão  utilizadas

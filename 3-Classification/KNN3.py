@@ -1,4 +1,3 @@
-# Initial imports
 import itertools
 import pandas as pd
 import numpy as np
@@ -94,23 +93,28 @@ def plot_confusion_matrix(cm, classes,
 
 
 def main():
-    # Load iris data and store in dataframe
+    #Dataset
     input_file = '0-Datasets/bankConvert.csv'
     names = ['age','job','marital','education','default','balance','housing','loan','y']
-    features = ['age','job','marital','education','default','balance','housing','loan','y']
+    features = ['age','job','marital','education','default','balance','housing','loan']
     target = 'y'
     df = pd.read_csv(input_file,    # Nome do arquivo com dados
-                     names = names) # Nome das colunas   
-    
-    df.head()
+                     names = names)
+
+    #Load dataset
+    data = df[features]
+    target = df['y']
+    labels = ['True label', 'Predective label']
+
+    data.head()
 
     # Separate X and y data
-    X = df.loc[:, features]    
-    y = df.loc[:,target]  
+    X = data
+    y = target   
     print("Total samples: {}".format(X.shape[0]))
 
     # Split the data - 75% train, 25% test
-    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.3, random_state=1)
+    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.25, random_state=1)
     print("Total train samples: {}".format(X_train.shape[0]))
     print("Total test  samples: {}".format(X_test.shape[0]))
 
@@ -130,12 +134,13 @@ def main():
     print("F1 Score K-NN from scratch: {:.2f}%".format(f1))
 
     # Get test confusion matrix
-    cm = confusion_matrix(y_test, y_hat_test)        
-    plot_confusion_matrix(cm, ['y = 1','y = 0'], False, "Confusion Matrix - K-NN")      
-    plot_confusion_matrix(cm,   ['y = 1','y = 0'], True, "Confusion Matrix - K-NN normalized")  
+    cm = confusion_matrix(y_test, y_hat_test)
+    print(cm)        
+    plot_confusion_matrix(cm, labels, False, "Confusion Matrix - K-NN")      
+    plot_confusion_matrix(cm, labels, True, "Confusion Matrix - K-NN normalized")  
 
     # STEP 2 - TESTS USING knn classifier from sk-learn
-    knn = KNeighborsClassifier(n_neighbors=5)
+    knn = KNeighborsClassifier(n_neighbors=10)
     knn.fit(X_train, y_train)
     y_hat_test = knn.predict(X_test)
 
@@ -147,8 +152,8 @@ def main():
 
     # Get test confusion matrix    
     cm = confusion_matrix(y_test, y_hat_test)        
-    plot_confusion_matrix(cm,   ['y = 1','y = 0'], False, "Confusion Matrix - K-NN sklearn")      
-    plot_confusion_matrix(cm,   ['y = 1','y = 0'], True, "Confusion Matrix - K-NN sklearn normalized" )  
+    plot_confusion_matrix(cm, labels, False, "Confusion Matrix - K-NN sklearn")      
+    plot_confusion_matrix(cm, labels, True, "Confusion Matrix - K-NN sklearn normalized" )  
     plt.show()
 
 
