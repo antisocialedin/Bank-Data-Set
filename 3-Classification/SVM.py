@@ -11,6 +11,8 @@ from sklearn.metrics import confusion_matrix
 #from sklearn import datasets
 from sklearn.svm import SVC
 
+from numba import jit, cuda
+
 def plot_confusion_matrix(cm, classes,
                           normalize=False,
                           title='Confusion matrix',
@@ -59,7 +61,7 @@ def main():
                      names = names) # Nome das colunas                      
     #ShowInformationDataFrame(df,"Dataframe original")
 
-    df = df.loc[0:5000]
+    #df = df.loc[0:5000]
 
     # Separate X and y data
     #X = df.loc[:, features]    
@@ -83,6 +85,7 @@ def main():
     X_train = scaler.fit_transform(X_train)
     X_test = scaler.transform(X_test)
 
+    @jit(target ="cuda")
     # TESTS USING SVM classifier from sk-learn    
     svm = SVC(kernel='poly') # poly, rbf, linear
     # training using train dataset

@@ -112,7 +112,7 @@ def main():
                      names = names) # Nome das colunas                      
     #ShowInformationDataFrame(df,"Dataframe original")   
     
-    df = df.loc[0:500]
+    #df = df.loc[0:500]
 
     # Separate X and y data
     X = df.drop('y', axis=1)
@@ -166,7 +166,7 @@ def main():
     cv_results = cross_validate(knn, X, y, cv=10)
     sorted(cv_results.keys())
     sorted(cv_results['test_score'])
-    print("Cross Validation SVM: {:.2f}%".format(np.mean(cv_results['test_score'])*100))
+    print("Cross Validation KNN: {:.2f}%".format(np.mean(cv_results['test_score'])*100))
 
      # Get test accuracy score
     accuracy = accuracy_score(y_test, y_hat_test)*100
